@@ -1,6 +1,7 @@
 # MJML 4
 
 If you're looking for MJML 3.3.X check [this branch](https://github.com/mjmlio/mjml/tree/3.3.x)
+Fork of MJML 4 to use `mjml-4-terser` instead of `mjml` to fix multiple vulnerabilities
 
 <p style="text-align: center;" >
   <a href="https://mjml.io" target="_blank">
@@ -109,11 +110,14 @@ See [mjml-cli documentation](https://github.com/mjmlio/mjml/blob/master/packages
 
 ```javascript
 import mjml2html from 'mjml'
+import mjml2html from 'mjml-4-terser'
 
 /*
   Compile an mjml string
 */
 const htmlOutput = mjml2html(`
+const htmlOutput = mjml2html(
+  `
   <mjml>
     <mj-body>
       <mj-section>
@@ -127,6 +131,9 @@ const htmlOutput = mjml2html(`
   </mjml>
 `, options)
 
+`,
+  options,
+)
 
 /*
   Print the responsive HTML generated and MJML errors if any

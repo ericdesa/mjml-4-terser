@@ -1,5 +1,5 @@
 {
-  "name": "mjml-master",
+  "name": "mjml-4-terser",
   "private": true,
   "scripts": {
     "build:watch": "lerna run build --parallel -- -- -w",

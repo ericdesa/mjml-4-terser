@@ -7,7 +7,7 @@ import mjml2html from 'mjml-core'
 import { flow, pickBy, flatMap, uniq, difference, remove } from 'lodash/fp'
 import { omit } from 'lodash'
 import { html as htmlBeautify } from 'js-beautify'
-import { minify as htmlMinify } from 'html-minifier'
+import { minify as htmlMinify } from 'html-minifier-terser'
 
 import readFile from './readFile'
 import makeOutputToFile from './outputToFile'
@@ -22,7 +22,7 @@ const flatMapKeyAndValues = flow(
   uniq,
 )
 
-export default (input, options) => {
+export default async (input, options) => {
   const dependencies = {}
   const outputToFile = makeOutputToFile(options.o)
   const getRelatedFiles = (file) =>
@@ -51,7 +51,7 @@ export default (input, options) => {
   }
   const readAndCompile = flow(
     (file) => ({ file, content: readFile(file).mjml }),
-    (args) => {
+    async (args) => {
       const { config, beautifyConfig, minifyConfig } = options
       const beautify = config.beautify && config.beautify !== 'false'
       const minify = config.minify && config.minify !== 'false'
@@ -65,7 +65,7 @@ export default (input, options) => {
         compiled.html = htmlBeautify(compiled.html, beautifyConfig)
       }
       if (minify) {
-        compiled.html = htmlMinify(compiled.html, {
+        compiled.html = await htmlMinify(compiled.html, {
           ...minifyConfig,
           ...config.minifyOptions,
         })
@@ -120,15 +120,16 @@ export default (input, options) => {
       synchronyzeWatcher(filePath)
     })
 
-  setInterval(() => {
-    dirty.forEach((f) => {
+  setInterval(async () => {
+    for (const f of dirty) {
       console.log(`${f} - Change detected`)
       try {
-        readAndCompile(f)
+        // eslint-disable-next-line no-await-in-loop
+        await readAndCompile(f)
       } catch (e) {
         console.log(`${f} - Error while rendering the file : `, e)
       }
-    })
+    }
     dirty = []
   }, 500)
 

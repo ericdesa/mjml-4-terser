@@ -13,7 +13,7 @@ import {
 import path from 'path'
 import juice from 'juice'
 import { html as htmlBeautify } from 'js-beautify'
-import { minify as htmlMinify } from 'html-minifier'
+import { minify as htmlMinify } from 'html-minifier-terser'
 import { load } from 'cheerio'
 
 import MJMLParser from 'mjml-parser-xml'
@@ -51,7 +51,7 @@ class ValidationError extends Error {
   }
 }
 
-export default function mjml2html(mjml, options = {}) {
+export default async function mjml2html(mjml, options = {}) {
   let content = ''
   let errors = []
 
@@ -415,7 +415,7 @@ export default function mjml2html(mjml, options = {}) {
       '"minify" option is deprecated in mjml-core and only available in mjml cli.',
     )
 
-    content = htmlMinify(content, {
+    content = await htmlMinify(content, {
       collapseWhitespace: true,
       minifyCSS: false,
       caseSensitive: true,
