@@ -1,7 +1,7 @@
 {
   "name": "mjml-browser",
   "description": "MJML: the only framework that makes responsive-email easy",
-  "version": "4.15.3",
+  "version": "4.15.5",
   "main": "lib/index.js",
   "files": [
     "lib"
@@ -9,7 +9,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ericdesa/mjml-4-terser.git",
-    "directory": "packages/mjml-browser"
+    "directory": "packages/mjml-browser-4-terser"
   },
   "license": "MIT",
   "bugs": {

@@ -1,4 +1,4 @@
-const types = require('./packages/mjml-core/lib/types/type.js')
+const types = require('./packages/mjml-core-4-terser/lib/types/type.js')
 
 const enumtype = types.initializeType('enum(top,left,center)')
 const colortype = types.initializeType('color')
@@ -8,9 +8,14 @@ const stringtype = types.initializeType('string')
 
 console.log(stringtype)
 
-const output = (t) => { console.log(`Type: ${t.constructor.name} — Value: ${t.value} — isValid: ${t.isValid()} ${t.getErrorMessage()}`) }
+const output = (t) => {
+  console.log(
+    `Type: ${t.constructor.name} — Value: ${t.value} — isValid: ${t.isValid()} ${t.getErrorMessage()}`,
+  )
+}
 
-[new colortype('grey'),
+;[
+  new colortype('grey'),
   new colortype('rgba(0,255,3,0.3)'),
   new colortype('#DDF'),
   new colortype('#DF'),
@@ -25,4 +30,3 @@ const output = (t) => { console.log(`Type: ${t.constructor.name} — Value: ${t.
   new unittype('0'),
   new stringtype('hello world'),
 ].map(output)
-
